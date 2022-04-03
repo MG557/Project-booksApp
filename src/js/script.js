@@ -97,7 +97,7 @@
   
       /* add element to manu */
       menuContainer.appendChild(thisBook.element);
-        
+      console.log('menuContainer', menuContainer);
     }
   }
   const favoriteBooks = [];
