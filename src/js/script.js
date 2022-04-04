@@ -108,8 +108,8 @@
 
     thisBook.container = document.querySelector(select.containerOf.bookList);
     console.log('book1', thisBook.container);
-    thisBook.bookImages = thisBook.querySelectorAll(select.books.bookCard);
-    console.log('book1', thisBook.bookImages);
+    thisBook.bookImages = thisBook.container.querySelectorAll(select.books.bookCard);
+    console.log('book2', thisBook.bookImages);
 
     for( const bookIm of thisBook.bookImages){
 
