@@ -17,10 +17,12 @@
       bookList: '.books-list',
           
     },
+    filters:'.filters',
   
   };
   const className = {
-    bookClassImage: 'favorite'
+    bookClassImage: 'favorite',
+    hidden: 'hidden',
   };
 
 
@@ -79,12 +81,12 @@
         //console.log('new Product:', thisProduct);
       }*/
   function render() {
-  
+    const thisBook = this;
     for(const book of dataSource.books) {
   
       
       //renderInMenu(){
-      const thisBook = this;
+      
   
       /* generate HTML based on template */
       const generatedHTML = templates.menuProduct(book);
@@ -97,11 +99,16 @@
   
       /* add element to manu */
       menuContainer.appendChild(thisBook.element);
-      console.log('menuContainer', menuContainer);
+      console.log('menuContainer:', menuContainer);
     }
   }
+  
   const favoriteBooks = [];
+  const filters = [];
+
   console.log('favBooks', favoriteBooks);
+  console.log('filters:', filters);
+  
   function initAction(){
     
     const thisBook = this;
@@ -110,8 +117,9 @@
     console.log('book1', thisBook.container);
     thisBook.bookImages = thisBook.container.querySelectorAll(select.books.bookCard);
     console.log('book2', thisBook.bookImages);
+    thisBook.bookFilter = document.querySelector(select.filters);
 
-    for( const bookIm of thisBook.bookImages){
+    /*for( const bookIm of thisBook.bookImages){
 
       bookIm.addEventListener('dblclick', function(event){
         event.preventDefault();
@@ -122,42 +130,102 @@
         console.log('fbooks', favoriteBooks);
       });
 
-    }
+    }*/
 
-    /*
+    
     thisBook.container.addEventListener('dblclick', function(event){
       event.preventDefault();
-      
       const book = event.target.offsetParent;
       
       if(book.classList.contains(select.books.bookImage)){
 
         book.classList.toggle(className.bookClassImage);
-        const bookImageId = book.getAttribute(select.books.imageLink);
+        const bookImId = book.getAttribute(select.books.imageLink);
 
-        if(favoriteBooks.includes(bookImageId)){
+        if(favoriteBooks.includes(bookImId)){
           
-          const idIndex = favoriteBooks.indexOf(bookImageId);
+          const idIndex = favoriteBooks.indexOf(bookImId);
           favoriteBooks.splice(idIndex, 1);
         }
         else{
-          favoriteBooks.push(bookImageId);
+          favoriteBooks.push(bookImId);
         }
 
         console.log('tabela',favoriteBooks);
-
-
       }
+    });
+    
+
+    thisBook.bookFilter.addEventListener('click', function(event){
+      event.preventDefault();
+      const bookFt = event.target;
+
+      if(bookFt.tagName === 'INPUT' && bookFt.type === 'checkbox' && bookFt.name === 'filter'){
+
+        if(bookFt.checked === true) {
+
+          filters.push(bookFt.value);
+
+        } else if (filters.includes(bookFt.value)){
+
+          const idIndex = filters.indexOf(bookFt.value);
+          filters.splice(idIndex, 1);
+
+        }   
+      }
+      console.log('INPUT:', bookFt.input);
+      console.log('filter:', bookFt.value);
+      console.log('filtersArray:', filters);
+      
+      filterBooks();
+    });
+    
+  } 
+  
+  function filterBooks() {
+    
+    
+    for(const book of dataSource.books){
+      
+      //console.log('bookFilterImg:', bookFilterImg);
+      const bookFilterId = [];
+      let shouldBeHiddenden = false;
       
 
-    });*/
-    
-  }  
+
+      for (const filter of filters){
+        
+
+        if(!book.details[filter]){
+          shouldBeHiddenden = true;
+          bookFilterId.push(book.id);
+          break;
+        }
+      }
+
+      if(shouldBeHiddenden === true){
+        
+        const bookFilterImg = document.querySelector('[data-id="' + book.id + '"]');
+        bookFilterImg.classList.add(className.hidden);
+        
+        console.log('bookFilterImg1:', bookFilterImg);
+
+      } else if (shouldBeHiddenden === false){
+        
+        const bookFilterImg = document.querySelector('[data-id="' + book.id + '"]');
+        bookFilterImg.classList.remove(className.hidden);
+
+        console.log('bookFilterImg2:',bookFilterImg.classList.remove);
+
+      }
+    }
+  }
   
   
   
 
   render();
   initAction();
+  
     
 }
