@@ -6,6 +6,7 @@
       bookImage: 'book__image',
       bookCard: '.book a',
       imageLink: 'data-id',
+      
 
     } ,
 
@@ -80,11 +81,13 @@
         
         //console.log('new Product:', thisProduct);
       }*/
+  
   function render() {
     const thisBook = this;
     for(const book of dataSource.books) {
   
-      
+      thisBook.ratingBgc = determineRatingBgc(book.rating);
+      thisBook.ratingWidth = book.rating *10;
       //renderInMenu(){
       
   
@@ -157,7 +160,7 @@
     
 
     thisBook.bookFilter.addEventListener('click', function(event){
-      event.preventDefault();
+      //event.preventDefault();
       const bookFt = event.target;
 
       if(bookFt.tagName === 'INPUT' && bookFt.type === 'checkbox' && bookFt.name === 'filter'){
@@ -172,12 +175,13 @@
           filters.splice(idIndex, 1);
 
         }   
+        
       }
       console.log('INPUT:', bookFt.input);
       console.log('filter:', bookFt.value);
       console.log('filtersArray:', filters);
-      
       filterBooks();
+      
     });
     
   } 
@@ -221,11 +225,33 @@
     }
   }
   
+  function determineRatingBgc (rating){
+    let ratingBgc = '';
+    console.log('ratingBgc:', ratingBgc);
+    
+    if(rating < 6){
+      ratingBgc = 'background: linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
+    
+
+    } else if (rating > 6 && rating <= 8) {
+      ratingBgc = 'background: linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+    
+
+    } else if ( rating > 8 && rating <= 9) {
+      ratingBgc = 'background: linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+    
+    } else if ( rating > 9) {
+      ratingBgc = 'background: linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+    
+    }
+    return ratingBgc();
+
+  }
   
   
 
   render();
   initAction();
-  
+  determineRatingBgc();
     
 }
