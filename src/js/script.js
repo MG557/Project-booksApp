@@ -86,8 +86,8 @@
     const thisBook = this;
     for(const book of dataSource.books) {
   
-      thisBook.ratingBgc = determineRatingBgc(book.rating);
-      thisBook.ratingWidth = book.rating *10;
+      book.ratingBgc = determineRatingBgc(book.rating);
+      book.ratingWidth = book.rating *10;
       //renderInMenu(){
       
   
@@ -230,22 +230,22 @@
     console.log('ratingBgc:', ratingBgc);
     
     if(rating < 6){
-      ratingBgc = 'background: linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
+      ratingBgc = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
     
 
     } else if (rating > 6 && rating <= 8) {
-      ratingBgc = 'background: linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+      ratingBgc = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
     
 
     } else if ( rating > 8 && rating <= 9) {
-      ratingBgc = 'background: linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+      ratingBgc = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
     
     } else if ( rating > 9) {
-      ratingBgc = 'background: linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+      ratingBgc = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
     
     }
-    return ratingBgc();
-
+    return ratingBgc; 
+    
   }
   
   
@@ -253,5 +253,6 @@
   render();
   initAction();
   determineRatingBgc();
+  console.log('det2', determineRatingBgc);
     
 }
